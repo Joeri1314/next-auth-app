@@ -1,9 +1,9 @@
-"use client";
+"use client"
 
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signIn, signOut } from "next-auth/react"
 
 export default function Navbar() {
-  const { data: session } = useSession();
+  const { data: session } = useSession()
 
   return (
     <nav className="flex items-center justify-between px-6 py-3 bg-gray-900 text-white">
@@ -12,7 +12,29 @@ export default function Navbar() {
       <div>
         {session?.user ? (
           <div className="flex items-center gap-4">
+            {/* Email */}
             <span>{session.user.email}</span>
+=
+            {/* Role indicator */}
+            <span
+              className={`text-lg font-bold ${
+                session.user.role === "user"
+                  ? "text-green-500"
+                  : session.user.role === "admin"
+                  ? "text-yellow-500"
+                  : "text-red-500"
+              }`}
+            >
+              {
+                session.user.role === "user"
+                ? "O"
+                : session.user.role === "admin"
+                ? "A"
+                : "X"
+              }
+            </span>
+
+            {/* Sign out */}
             <button
               onClick={() => signOut()}
               className="px-3 py-1 bg-red-500 rounded-lg text-sm"
@@ -30,5 +52,5 @@ export default function Navbar() {
         )}
       </div>
     </nav>
-  );
+  )
 }

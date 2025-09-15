@@ -8,9 +8,17 @@ const prisma = new PrismaClient()
 export const { handlers, auth, signIn, signOut } = NextAuth({
     adapter: PrismaAdapter(prisma),
     providers: [
-    Resend({
-      apiKey: process.env.AUTH_RESEND_KEY!,
-      from: "no-reply@mail.joeribrinks.nl"
-    }),
-  ],
+      Resend({
+        apiKey: process.env.AUTH_RESEND_KEY!,
+        from: "no-reply@mail.joeribrinks.nl"
+      }),
+    ],
+    callbacks: {
+    async session({ session, user }) {
+      if (session.user) {
+        session.user.role = user.role
+      }
+      return session
+    },
+  },
 })
