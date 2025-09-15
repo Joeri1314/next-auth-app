@@ -25,11 +25,13 @@ export default function Navbar() {
                   : "text-red-500"
               }`}
             >
-              {session.user.role === "user"
+              {
+                session.user.role === "user"
                 ? "O"
                 : session.user.role === "admin"
                 ? "A"
-                : "X"}
+                : "X"
+              }
             </span>
 
             {/* Sign out */}
